@@ -1,7 +1,7 @@
 default[:zookeeper][:version] = "3.4.5"
 default[:zookeeper][:mirror] = "http://mirrors.ibiblio.org/apache/zookeeper/zookeeper-#{default[:zookeeper][:version]}/zookeeper-#{default[:zookeeper][:version]}.tar.gz"
 default[:zookeeper][:checksum] = 'e92b634e99db0414c6642f6014506cc22eefbea42cc912b57d7d0527fb7db132'
-default[:zookeeper][:install_dir] = "/opt/zookeeper"
+default[:zookeeper][:install_dir] = "/data/zookeeper/zookeeper"
 default[:zookeeper][:user] = "zookeeper"
 default[:zookeeper][:group] = "zookeeper"
 
@@ -10,13 +10,13 @@ default[:gradle][:mirror] = "http://services.gradle.org/distributions/gradle-#{d
 default[:gradle][:checksum] = 'a5511a0659caa47d9d74fd2844c9da43157d2f78e63a0223c6289d88f5aaecbe'
 
 default[:exhibitor][:version] = "1.5.0"
-default[:exhibitor][:install_dir] = "/opt/exhibitor"
+default[:exhibitor][:install_dir] = "/data/zookeeper/exhibitor"
 
 default[:exhibitor][:script_dir] = '/usr/local/bin/'
 
-default[:exhibitor][:snapshot_dir] = "/tmp/zookeeper"
-default[:exhibitor][:transaction_dir] = "/tmp/zookeeper"
-default[:exhibitor][:log_index_dir] = "/tmp/zookeeper_log_indexes"
+default[:exhibitor][:snapshot_dir] = "/data/zookeeper/snapshots"
+default[:exhibitor][:transaction_dir] = "/data/zookeeper/transactions"
+default[:exhibitor][:log_index_dir] = "/data/zookeeper/log_indexes"
 
 # Port for the HTTP Server
 default[:exhibitor][:opts][:port] = "8080"
