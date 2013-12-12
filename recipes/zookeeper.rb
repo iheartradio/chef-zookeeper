@@ -34,22 +34,19 @@ user node[:zookeeper][:user] do
   gid node[:zookeeper][:group]
 end
 
-mount "/data/apps/zookeeper/snapshots"
+mount "/data/apps/zookeeper/snapshots" do
   device "/dev/sdb"
   fstype "ext4"
-  pass "0"
+  pass 0
   action [:mount, :enable]
 end
 
-mount "/data/apps/zookeeper/transactions"
+mount "/data/apps/zookeeper/transactions" do
   device "/dev/sdc"
   fstype "ext4"
-  pass "0"
+  pass 0
   action [:mount, :enable]
 end
-
-
-/dev/sdb /data/apps/zookeeper/snapshots ext4 defaults 1 1
 
 zk_basename = "zookeeper-#{node[:zookeeper][:version]}"
 
