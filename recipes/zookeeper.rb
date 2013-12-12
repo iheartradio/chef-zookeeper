@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe "java::default"
+include_recipe "java::oracle-7"
 
 node.override['build_essential']['compiletime'] = true
 include_recipe "build-essential"

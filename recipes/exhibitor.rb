@@ -19,6 +19,22 @@
 
 include_recipe "zookeeper::zookeeper"
 
+package "nfs-utils"
+
+nfs_server = search(:node, "recipe:zookeeper\\:\\:nfs AND chef_environment:#{node.chef_environment}")[0]
+
+directory "#{node[:exhibitor][:shared_conf_dir]}" do
+  action :create
+  recursive true
+end
+
+mount "#{node[:exhibitor][:shared_conf_dir]}" do
+  device "#{nfs_server[:hostname]}-v600.ihr:#{node[:exhibitor][:shared_conf_dir]}"
+  fstype "nfs"
+  options "noatime,nocto,no_root_squash"
+  action [:mount, :enable]
+end
+
 exhibitor_build_path = ::File.join(Chef::Config[:file_cache_path], 'exhibitor')
 
 [node[:exhibitor][:install_dir],

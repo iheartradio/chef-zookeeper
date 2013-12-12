@@ -17,6 +17,8 @@ default[:exhibitor][:script_dir] = '/usr/local/bin/'
 default[:exhibitor][:snapshot_dir] = "/data/apps/zookeeper/snapshots"
 default[:exhibitor][:transaction_dir] = "/data/apps/zookeeper/transactions"
 default[:exhibitor][:log_index_dir] = "/data/apps/zookeeper/log_indexes"
+default[:exhibitor][:shared_conf_dir] = "/data/apps/zookeeper/zk_shared_config"
+
 
 # Port for the HTTP Server
 default[:exhibitor][:opts][:port] = "8080"
@@ -40,7 +42,6 @@ default[:exhibitor][:defaultconfig][:election_port] = '3888'
 default[:exhibitor][:defaultconfig][:zoo_cfg_extra] = 'tickTime\=2000&initLimit\=10&syncLimit\=5'
 default[:exhibitor][:defaultconfig][:auto_manage_instances_settling_period_ms] = '0'
 default[:exhibitor][:defaultconfig][:auto_manage_instances] = '1'
-
 
 # default options. see https://github.com/Netflix/exhibitor/wiki/Running-Exhibitor
 #
