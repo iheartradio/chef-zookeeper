@@ -43,6 +43,9 @@ default[:exhibitor][:defaultconfig][:zoo_cfg_extra] = 'tickTime\=2000&initLimit\
 default[:exhibitor][:defaultconfig][:auto_manage_instances_settling_period_ms] = '0'
 default[:exhibitor][:defaultconfig][:auto_manage_instances] = '1'
 
+
+default[:exhibitor][:opts][:fsconfigdir] = '/data/apps/zookeeper/zk_shared_config'
+
 # default options. see https://github.com/Netflix/exhibitor/wiki/Running-Exhibitor
 #
 # If true, enables AWS S3 backup of ZooKeeper log files (s3credentials may be provided as well).
