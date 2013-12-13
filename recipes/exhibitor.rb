@@ -21,6 +21,12 @@ include_recipe "zookeeper::zookeeper"
 
 package "nfs-utils"
 
+service "rpcbind" do
+  provider Chef::Provider::Service::Init
+  supports :start => true, :status => true, :restart => true
+  action :start
+end
+
 nfs_server = search(:node, "recipe:zookeeper\\:\\:nfs AND chef_environment:#{node.chef_environment}")[0]
 
 directory "#{node[:exhibitor][:shared_conf_dir]}" do
@@ -29,9 +35,9 @@ directory "#{node[:exhibitor][:shared_conf_dir]}" do
 end
 
 mount "#{node[:exhibitor][:shared_conf_dir]}" do
-  device "#{nfs_server[:hostname]}-v600.ihr:#{node[:exhibitor][:shared_conf_dir]}"
+  device "#{nfs_server[:hostname]}-v600.ihr:#{node[:exhibitor][:mount_dir]}"
   fstype "nfs"
-  options "noatime,nocto,no_root_squash"
+  options "noatime,nocto"
   action [:mount, :enable]
 end
 
@@ -96,6 +102,14 @@ template "/etc/init/exhibitor.conf" do
     :check_script => check_script )
 end
 
+server_spec=String.new
+
+zookeepers = search(:node, "role:zookeeper AND chef_environment:#{node.chef_environment}")
+
+zookeeper.each do |zk_node|
+  server_spec = server_spec + "S:" + "#{node[:zookeeper][:server_id]}:" + "{node[:hostname]}-v200.ihr"
+end
+
 template node[:exhibitor][:opts][:defaultconfig] do
   owner node[:zookeeper][:user]
   mode "0644"
@@ -103,7 +117,8 @@ template node[:exhibitor][:opts][:defaultconfig] do
     :snapshot_dir => node[:exhibitor][:snapshot_dir],
     :transaction_dir => node[:exhibitor][:transaction_dir],
     :log_index_dir => node[:exhibitor][:log_index_dir],
-    :defaultconfig => node[:exhibitor][:defaultconfig] )
+    :defaultconfig => node[:exhibitor][:defaultconfig],
+    :server_spec => server_spec )
 end
 
 service "exhibitor" do
