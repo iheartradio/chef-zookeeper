@@ -34,14 +34,26 @@ user node[:zookeeper][:user] do
   gid node[:zookeeper][:group]
 end
 
-mount "/data/apps/zookeeper/snapshots" do
+directory "#{node[:exhibitor][:snapshot_dir]}" do
+  user "zookeeper"
+  group "zookeeper"
+  recursive true
+end
+
+directory "#{node[:exhibitor][:transaction_dir]}" do
+  user "zookeeper"
+  group "zookeeper"
+  recursive true
+end
+
+mount "#{node[:exhibitor][:snapshot_dir]}" do
   device "/dev/sdb"
   fstype "ext4"
   pass 0
   action [:mount, :enable]
 end
 
-mount "/data/apps/zookeeper/transactions" do
+mount "#{node[:exhibitor][:transaction_dir]}" do
   device "/dev/sdc"
   fstype "ext4"
   pass 0
@@ -61,6 +73,7 @@ end
 directory node[:zookeeper][:install_dir] do
   owner node[:zookeeper][:user]
   mode "0755"
+  recursive true
 end
 
 unless ::File.exists?(::File.join(node[:zookeeper][:install_dir], zk_basename))

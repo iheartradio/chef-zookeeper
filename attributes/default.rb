@@ -1,7 +1,7 @@
 default[:zookeeper][:version] = "3.4.5"
 default[:zookeeper][:mirror] = "http://mirrors.ibiblio.org/apache/zookeeper/zookeeper-#{default[:zookeeper][:version]}/zookeeper-#{default[:zookeeper][:version]}.tar.gz"
 default[:zookeeper][:checksum] = 'e92b634e99db0414c6642f6014506cc22eefbea42cc912b57d7d0527fb7db132'
-default[:zookeeper][:install_dir] = "/data/apps/zookeeper"
+default[:zookeeper][:install_dir] = "/data/apps/zookeeper/versions"
 default[:zookeeper][:user] = "zookeeper"
 default[:zookeeper][:group] = "zookeeper"
 
@@ -14,10 +14,10 @@ default[:exhibitor][:install_dir] = "/data/apps/zookeeper/exhibitor"
 
 default[:exhibitor][:script_dir] = '/usr/local/bin/'
 
-default[:exhibitor][:snapshot_dir] = "/data/apps/zookeeper/snapshots"
-default[:exhibitor][:transaction_dir] = "/data/apps/zookeeper/transactions"
+default[:exhibitor][:snapshot_dir] = "/data/apps/zookeeper/mounts/snapshots"
+default[:exhibitor][:transaction_dir] = "/data/apps/zookeeper/mounts/transactions"
 default[:exhibitor][:log_index_dir] = "/data/apps/zookeeper/log_indexes"
-default[:exhibitor][:shared_conf_dir] = "/data/apps/zookeeper/zk_shared_config"
+default[:exhibitor][:shared_conf_dir] = "/data/apps/zookeeper/mounts/zk_shared_config"
 default[:exhibitor][:mount_dir] = "/data/exports/zk_shared_config"
 
 # Port for the HTTP Server
@@ -26,7 +26,6 @@ default[:exhibitor][:opts][:hostname] =  node[:ipaddress]
 default[:exhibitor][:opts][:defaultconfig] = "#{Chef::Config[:file_cache_path]}/defaultconfig.exhibitor"
 
 default[:exhibitor][:opts][:configtype] = "file"
-default[:exhibitor][:opts][:fsconfigdir] = "/tmp"
 
 default[:exhibitor][:defaultconfig][:cleanup_period_ms] = 5 * 60 * 1000
 default[:exhibitor][:defaultconfig][:zookeeper_install_directory] = "#{node[:zookeeper][:install_dir]}/*"
@@ -43,7 +42,7 @@ default[:exhibitor][:defaultconfig][:zoo_cfg_extra] = 'tickTime\=2000&initLimit\
 default[:exhibitor][:defaultconfig][:auto_manage_instances_settling_period_ms] = '0'
 default[:exhibitor][:defaultconfig][:auto_manage_instances] = '1'
 
-default[:exhibitor][:opts][:fsconfigdir] = '/data/apps/zookeeper/zk_shared_config'
+default[:exhibitor][:opts][:fsconfigdir] = '/data/apps/zookeeper/mounts/zk_shared_config'
 
 # default options. see https://github.com/Netflix/exhibitor/wiki/Running-Exhibitor
 #

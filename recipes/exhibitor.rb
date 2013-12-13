@@ -102,13 +102,19 @@ template "/etc/init/exhibitor.conf" do
     :check_script => check_script )
 end
 
-server_spec=String.new
+servers_spec=String.new
 
 zookeepers = search(:node, "role:zookeeper AND chef_environment:#{node.chef_environment}")
 
-zookeeper.each do |zk_node|
-  server_spec = server_spec + "S:" + "#{node[:zookeeper][:server_id]}:" + "{node[:hostname]}-v200.ihr"
+zookeepers.each_with_index do |zk_node, index|
+  if index == zookeepers.size - 1
+     servers_spec = servers_spec + "S:" + "#{zk_node[:zookeeper][:server_id]}:" + "#{zk_node[:fqdn]}"
+  else
+     servers_spec = servers_spec + "S:" + "#{zk_node[:zookeeper][:server_id]}:" + "#{zk_node[:fqdn]},"
+  end
 end
+
+#server_spec = server_spec_array.join ":"
 
 template node[:exhibitor][:opts][:defaultconfig] do
   owner node[:zookeeper][:user]
@@ -118,7 +124,7 @@ template node[:exhibitor][:opts][:defaultconfig] do
     :transaction_dir => node[:exhibitor][:transaction_dir],
     :log_index_dir => node[:exhibitor][:log_index_dir],
     :defaultconfig => node[:exhibitor][:defaultconfig],
-    :server_spec => server_spec )
+    :servers_spec => servers_spec )
 end
 
 service "exhibitor" do
