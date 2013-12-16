@@ -17,7 +17,6 @@ default[:exhibitor][:script_dir] = '/usr/local/bin/'
 default[:exhibitor][:snapshot_dir] = "/data/apps/zookeeper/mounts/snapshots"
 default[:exhibitor][:transaction_dir] = "/data/apps/zookeeper/mounts/transactions"
 default[:exhibitor][:log_index_dir] = "/data/apps/zookeeper/log_indexes"
-default[:exhibitor][:shared_conf_dir] = "/data/apps/zookeeper/mounts/zk_shared_config"
 default[:exhibitor][:mount_dir] = "/data/exports/zk_shared_config"
 
 # Port for the HTTP Server
