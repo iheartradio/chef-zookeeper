@@ -26,6 +26,7 @@ default[:exhibitor][:opts][:hostname] =  node[:ipaddress]
 default[:exhibitor][:opts][:defaultconfig] = "#{Chef::Config[:file_cache_path]}/defaultconfig.exhibitor"
 
 default[:exhibitor][:opts][:configtype] = "file"
+default[:exhibitor][:opts][:fsconfigdir] = '/data/apps/zookeeper/mounts/zk_shared_config'
 
 default[:exhibitor][:defaultconfig][:cleanup_period_ms] = 5 * 60 * 1000
 default[:exhibitor][:defaultconfig][:zookeeper_install_directory] = "#{node[:zookeeper][:install_dir]}/*"
@@ -41,8 +42,6 @@ default[:exhibitor][:defaultconfig][:election_port] = '3888'
 default[:exhibitor][:defaultconfig][:zoo_cfg_extra] = 'tickTime\=2000&initLimit\=10&syncLimit\=5'
 default[:exhibitor][:defaultconfig][:auto_manage_instances_settling_period_ms] = '0'
 default[:exhibitor][:defaultconfig][:auto_manage_instances] = '1'
-
-default[:exhibitor][:opts][:fsconfigdir] = '/data/apps/zookeeper/mounts/zk_shared_config'
 
 # default options. see https://github.com/Netflix/exhibitor/wiki/Running-Exhibitor
 #
