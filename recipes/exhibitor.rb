@@ -108,9 +108,9 @@ zookeepers = search(:node, "role:zookeeper AND chef_environment:#{node.chef_envi
 
 zookeepers.each_with_index do |zk_node, index|
   if index == zookeepers.size - 1
-     servers_spec = servers_spec + "S:" + "#{zk_node[:zookeeper][:server_id]}:" + "#{zk_node[:fqdn]}"
+     servers_spec = servers_spec + "S:" + "#{zk_node[:zookeeper][:server_id]}:" + "#{zk_node[:ipaddress]}"
   else
-     servers_spec = servers_spec + "S:" + "#{zk_node[:zookeeper][:server_id]}:" + "#{zk_node[:fqdn]},"
+     servers_spec = servers_spec + "S:" + "#{zk_node[:zookeeper][:server_id]}:" + "#{zk_node[:ipaddress]},"
   end
 end
 
