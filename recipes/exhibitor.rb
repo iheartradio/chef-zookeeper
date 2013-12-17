@@ -29,12 +29,12 @@ end
 
 nfs_server = search(:node, "recipe:zookeeper\\:\\:nfs AND chef_environment:#{node.chef_environment}")[0]
 
-directory "#{node[:exhibitor][:shared_conf_dir]}" do
+directory "#{node[:exhibitor][:opts][:fsconfigdir]}" do
   action :create
   recursive true
 end
 
-mount "#{node[:exhibitor][:shared_conf_dir]}" do
+mount "#{node[:exhibitor][:opts][:fsconfigdir]}" do
   device "#{nfs_server[:hostname]}-v600.ihr:#{node[:exhibitor][:mount_dir]}"
   fstype "nfs"
   options "noatime,nocto"
